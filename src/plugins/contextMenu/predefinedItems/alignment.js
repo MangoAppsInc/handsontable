@@ -26,7 +26,7 @@ export default function alignmentItem() {
                 return true;
               }
             });
-
+            label = _i18n_bkp?_i18n_bkp(label): label;
             if (hasClass) {
               label = markLabelAsSelected(label);
             }
@@ -57,7 +57,7 @@ export default function alignmentItem() {
                 return true;
               }
             });
-
+            label = _i18n_bkp ? _i18n_bkp(label) : label;
             if (hasClass) {
               label = markLabelAsSelected(label);
             }
@@ -88,7 +88,7 @@ export default function alignmentItem() {
                 return true;
               }
             });
-
+            label = _i18n_bkp?_i18n_bkp(label): label;
             if (hasClass) {
               label = markLabelAsSelected(label);
             }
@@ -108,37 +108,37 @@ export default function alignmentItem() {
           },
           disabled: false
         },
-        {
-          key: `${KEY}:justify`,
-          name() {
-            let label = this.getTranslatedPhrase(C.CONTEXTMENU_ITEMS_ALIGNMENT_JUSTIFY);
-            const hasClass = checkSelectionConsistency(this.getSelectedRange(), (row, col) => {
-              const className = this.getCellMeta(row, col).className;
-
-              if (className && className.indexOf('htJustify') !== -1) {
-                return true;
-              }
-            });
-
-            if (hasClass) {
-              label = markLabelAsSelected(label);
-            }
-
-            return label;
-          },
-          callback() {
-            const selectedRange = this.getSelectedRange();
-            const stateBefore = getAlignmentClasses(selectedRange, (row, col) => this.getCellMeta(row, col).className);
-            const type = 'horizontal';
-            const alignment = 'htJustify';
-
-            this.runHooks('beforeCellAlignment', stateBefore, selectedRange, type, alignment);
-            align(selectedRange, type, alignment, (row, col) => this.getCellMeta(row, col),
-              (row, col, key, value) => this.setCellMeta(row, col, key, value));
-            this.render();
-          },
-          disabled: false
-        },
+        // {
+        //   key: `${KEY}:justify`,
+        //   name() {
+        //     let label = this.getTranslatedPhrase(C.CONTEXTMENU_ITEMS_ALIGNMENT_JUSTIFY);
+        //     const hasClass = checkSelectionConsistency(this.getSelectedRange(), (row, col) => {
+        //       const className = this.getCellMeta(row, col).className;
+        //
+        //       if (className && className.indexOf('htJustify') !== -1) {
+        //         return true;
+        //       }
+        //     });
+                    //label = _i18n_bkp?_i18n_bkp(label): label;
+        //     if (hasClass) {
+        //       label = markLabelAsSelected(label);
+        //     }
+        //
+        //     return label;
+        //   },
+        //   callback() {
+        //     const selectedRange = this.getSelectedRange();
+        //     const stateBefore = getAlignmentClasses(selectedRange, (row, col) => this.getCellMeta(row, col).className);
+        //     const type = 'horizontal';
+        //     const alignment = 'htJustify';
+        //
+        //     this.runHooks('beforeCellAlignment', stateBefore, selectedRange, type, alignment);
+        //     align(selectedRange, type, alignment, (row, col) => this.getCellMeta(row, col),
+        //       (row, col, key, value) => this.setCellMeta(row, col, key, value));
+        //     this.render();
+        //   },
+        //   disabled: false
+        // },
         {
           name: SEPARATOR
         },
@@ -153,7 +153,7 @@ export default function alignmentItem() {
                 return true;
               }
             });
-
+            label = _i18n_bkp ? _i18n_bkp(label) : label;
             if (hasClass) {
               label = markLabelAsSelected(label);
             }
@@ -183,7 +183,7 @@ export default function alignmentItem() {
                 return true;
               }
             });
-
+            label = _i18n_bkp ? _i18n_bkp(label) : label;
             if (hasClass) {
               label = markLabelAsSelected(label);
             }
@@ -214,7 +214,7 @@ export default function alignmentItem() {
                 return true;
               }
             });
-
+            label = _i18n_bkp ? _i18n_bkp(label) : label;
             if (hasClass) {
               label = markLabelAsSelected(label);
             }

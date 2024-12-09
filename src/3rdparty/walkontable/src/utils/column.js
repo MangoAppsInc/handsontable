@@ -65,7 +65,7 @@ export default class ColumnUtils {
     const oversizedHeight = this.wot.wtViewport.oversizedColumnHeaders[level];
 
     if (oversizedHeight !== void 0) {
-      height = height ? Math.max(height, oversizedHeight) : oversizedHeight;
+      height = height ? Math.min(height, oversizedHeight) : oversizedHeight;
     }
 
     return height;

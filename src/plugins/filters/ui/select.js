@@ -152,6 +152,24 @@ class SelectUI extends BaseUI {
   }
 
   /**
+  * Enable clear column filter Menu when user perform any dirty action on Table
+  *
+  * @private
+  * @param None.
+  */
+  enableClearColumnField() {
+    try {
+      const dropdownMenu = this.hot.getPlugin('dropdownMenu');
+      if(dropdownMenu && dropdownMenu.menu.hotMenu) {
+        dropdownMenu.menu.hotMenu.getCell(0,0).classList.remove('htDisabled');
+        window.columnFilterAttempted = true;
+      }
+    } catch(err) {
+      console.trace(err);
+    }
+  }
+
+  /**
    * On menu selected listener.
    *
    * @private
@@ -163,6 +181,7 @@ class SelectUI extends BaseUI {
       this.closeOptions();
       this.update();
       this.runLocalHooks('select', this.options.value);
+      this.enableClearColumnField();
     }
   }
 

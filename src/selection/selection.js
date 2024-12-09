@@ -1,4 +1,4 @@
-import Highlight, { AREA_TYPE, HEADER_TYPE, CELL_TYPE } from './highlight/highlight';
+import Highlight, { AREA_TYPE, HEADER_TYPE } from './highlight/highlight';
 import SelectionRange from './range';
 import { CellCoords } from './../3rdparty/walkontable/src';
 import { isPressedCtrlKey } from './../utils/keyStateObserver';
@@ -218,7 +218,7 @@ class Selection {
     // Set up current selection.
     this.highlight.getCell().clear();
 
-    if (this.highlight.isEnabledFor(CELL_TYPE)) {
+    if (cellRange.from.col === cellRange.to.col && cellRange.from.row === cellRange.to.row) {
       this.highlight.getCell().add(this.selectedRange.current().highlight);
     }
 
@@ -475,8 +475,8 @@ class Selection {
       return false;
 
     } else if (selectionType === SELECTION_TYPE_UNRECOGNIZED) {
-      throw new Error(toSingleLine`Unsupported format of the selection ranges was passed. To select cells pass 
-        the coordinates as an array of arrays ([[rowStart, columnStart/columnPropStart, rowEnd, columnEnd/columnPropEnd]]) 
+      throw new Error(toSingleLine`Unsupported format of the selection ranges was passed. To select cells pass
+        the coordinates as an array of arrays ([[rowStart, columnStart/columnPropStart, rowEnd, columnEnd/columnPropEnd]])
         or as an array of CellRange objects.`);
     }
 

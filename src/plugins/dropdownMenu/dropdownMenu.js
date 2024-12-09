@@ -226,6 +226,7 @@ class DropdownMenu extends BasePlugin {
     if (!this.menu) {
       return;
     }
+    window.columnFilterAttempted = false;
     this.menu.open();
 
     if (position.width) {
@@ -303,7 +304,7 @@ class DropdownMenu extends BasePlugin {
   onTableClick(event) {
     stopPropagation(event);
 
-    if (hasClass(event.target, BUTTON_CLASS_NAME) && !this.menu.isOpened()) {
+    if ((hasClass(event.target, BUTTON_CLASS_NAME) || hasClass(event.target, 'filter-icon')) && !this.menu.isOpened()) {
       const rect = event.target.getBoundingClientRect();
 
       this.open({
@@ -337,9 +338,10 @@ class DropdownMenu extends BasePlugin {
     }
 
     const existingButton = TH.querySelector(`.${BUTTON_CLASS_NAME}`);
+    const existingFLElem = TH.querySelector('.filter-icon');
 
     // Plugin enabled and buttons already exists, return.
-    if (this.enabled && existingButton) {
+    if (this.enabled && (existingButton || existingFLElem)) {
       return;
     }
     // Plugin disabled and buttons still exists, so remove them.
@@ -347,19 +349,23 @@ class DropdownMenu extends BasePlugin {
       if (existingButton) {
         existingButton.parentNode.removeChild(existingButton);
       }
-
+      if (existingFLElem) {
+        existingFLElem.parentNode.removeChild(existingFLElem);
+      }
       return;
     }
     const button = this.hot.rootDocument.createElement('button');
-
-    button.className = BUTTON_CLASS_NAME;
+    const iElem = this.hot.rootDocument.createElement('I');
+    button.className = `${BUTTON_CLASS_NAME} far fa-chevron-square-down`;
+    iElem.className = 'far fa-filter filter-icon';
 
     // prevent page reload on button click
     button.onclick = function() {
       return false;
     };
 
-    TH.firstChild.insertBefore(button, TH.firstChild.firstChild);
+    if (!this.hot.getSettings().isSharedView) TH.firstChild.insertBefore(button, TH.firstChild.firstChild);
+    TH.firstChild.insertBefore(iElem, TH.firstChild.firstChild);
   }
 
   /**

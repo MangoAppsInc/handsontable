@@ -132,10 +132,14 @@
   overflow-y: scroll;
 }
 
-.handsontable .htFiltersActive .changeType {
+/* .handsontable .htFiltersActive .changeType {
   border: 1px solid #509272;
   color: #18804e;
   background-color: #d2e0d9;
+} */
+
+.handsontable .htFiltersActive .filter-icon {
+  color: #18804e !important;
 }
 
 .handsontable .htUISelectAll {

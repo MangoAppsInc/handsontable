@@ -22,6 +22,13 @@
   cursor: pointer;
 }
 
+.handsontable .filter-icon {
+  float:right;
+  font-size: 12px;
+  margin: 3px 1px 0 5px;
+  cursor: pointer;
+}
+
 .htDropdownMenu:not(.htGhostTable) {
   display: none;
   position: absolute;

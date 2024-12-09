@@ -303,8 +303,7 @@ class Menu {
     let autoClose = true;
 
     // Don't close context menu if item is disabled or it has submenu
-    if (selectedItem.disabled === true ||
-        (typeof selectedItem.disabled === 'function' && selectedItem.disabled.call(this.hot) === true) ||
+    if (selectedItem.doNotClose || selectedItem.disabled === true || (typeof selectedItem.disabled === 'function' && selectedItem.disabled.call(this.hot) === true) ||
         selectedItem.submenu) {
       autoClose = false;
     }
@@ -506,6 +505,7 @@ class Menu {
     }
     if (itemIsDisabled(item)) {
       addClass(TD, 'htDisabled');
+      if (item.showTitle && item.titleValue) TD.setAttribute('title', item.titleValue);
       this.eventManager.addEventListener(TD, 'mouseenter', () => hot.deselectCell());
 
     } else if (itemIsSelectionDisabled(item)) {

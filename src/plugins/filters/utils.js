@@ -1,7 +1,23 @@
 import { getComparisonFunction } from '../../helpers/feature';
 import { arrayUnique, arrayEach } from '../../helpers/array';
+import { maDateFormats } from '../../helpers/unicode';
 
 const sortCompare = getComparisonFunction();
+const textAreaElem = document.createElement('textarea');
+const decodeHTMLCode = (str) => {
+  try {
+      if (str && typeof str === 'string') {
+          str = str.replace(/</g, '&lt;');
+          str = str.replace(/>/g, '&gt;');
+          textAreaElem.innerHTML = str;
+          str = textAreaElem.textContent;
+          textAreaElem.textContent = '';
+      }
+      return str;
+  } catch (err) {
+      utils.log(err);
+  }
+};
 
 /**
  * Comparison function for sorting purposes.
@@ -25,11 +41,44 @@ export function sortComparison(a, b) {
  * @param {String} defaultEmptyValue Default value for empty cells.
  * @returns {*}
  */
-export function toVisualValue(value, defaultEmptyValue) {
+export function toVisualValue(value, defaultEmptyValue, cellType, isUserRefCol) {
   let visualValue = value;
 
   if (visualValue === '') {
     visualValue = `(${defaultEmptyValue})`;
+    return visualValue;
+  }
+  // Look ahead columns
+  if (['UL','TCL','OL'].indexOf(cellType) > -1) {
+    visualValue = visualValue.split(',').map(val => val.includes(':') ? val.split(':')[1] : val).join(', ').replace(/,\s*$/, '');
+  }
+
+  if (['TL'].indexOf(cellType) > -1) {
+    const teamValues = visualValue.split('___');
+    const teamCounts = teamValues.slice(10,).length;
+    visualValue = teamValues.slice(0, 10).map(val => val.includes(':') ? val.split(':')[1] : val).join(', ').replace(/,\s*$/, '');
+    if(teamCounts > 0) {
+      visualValue += `, +${teamCounts}`;
+    }
+  }
+
+  // string and dropdown column.
+  if (['S', 'O'].indexOf(cellType) > -1) {
+    visualValue = decodeHTMLCode(visualValue);
+  }
+  // Checkbox column
+  if (['C'].indexOf(cellType) > -1) {
+    visualValue =  visualValue.split('___').join(', ').replace(/,\s*$/, '');
+  }
+  // URL columns
+  if (['URL'].indexOf(cellType) > -1) {
+     visualValue =  visualValue.split(':::')[0];
+  }
+  // Date column
+  if (['D'].indexOf(cellType) > -1 && isUserRefCol) {
+     try {
+       visualValue = moment(visualValue, "DD/MM/YYYY").format(maDateFormats[window.domain_date_format] || "DD/MM/YYYY");
+     } catch(e) {}
   }
 
   return visualValue;
@@ -113,7 +162,7 @@ export function unifyColumnValues(values) {
  * @param {Function} [callback] A callback function which is invoked for every item in an array.
  * @returns {Array}
  */
-export function intersectValues(base, selected, defaultEmptyValue, callback) {
+export function intersectValues(base, selected, defaultEmptyValue, callback, cellInfo) {
   const result = [];
   const same = base === selected;
   let selectedItemsAssertion;
@@ -129,7 +178,7 @@ export function intersectValues(base, selected, defaultEmptyValue, callback) {
       checked = true;
     }
 
-    const item = { checked, value, visualValue: toVisualValue(value, defaultEmptyValue) };
+    const item = { checked, value, visualValue: toVisualValue(value, defaultEmptyValue, cellInfo.data_type, cellInfo.user_ref_col) };
 
     if (callback) {
       callback(item);

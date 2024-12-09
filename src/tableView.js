@@ -775,6 +775,7 @@ class TableView {
   updateCellHeader(element, index, content) {
     let renderedIndex = index;
     const parentOverlay = this.wt.wtOverlays.getParentOverlay(element) || this.wt;
+    const { rootDocument } = this.instance;
 
     // prevent wrong calculations from SampleGenerator
     if (element.parentNode) {
@@ -791,8 +792,27 @@ class TableView {
 
     } else {
       // workaround for https://github.com/handsontable/handsontable/issues/1946
-      fastInnerText(element, String.fromCharCode(160));
-      addClass(element, 'cornerHeader');
+      if(this.settings.isMobileView) {
+        fastInnerText(element, String.fromCharCode(160));
+        addClass(element, 'cornerHeader');
+      } else {
+        if(element.firstChild) {
+          addClass(element, 'cornerHeader');
+        } else {
+          const inputElem = rootDocument.createElement('input');
+          const labelElem = rootDocument.createElement('label');
+          inputElem.setAttribute('type','checkbox');
+          inputElem.setAttribute('id','col_header_checkbox');
+          inputElem.setAttribute('title','Select all entries (max 500 at a time)');
+          labelElem.setAttribute('style','height:22px;');
+          labelElem.setAttribute('for','col_header_checkbox');
+          addClass(inputElem, 'filled-in');
+          addClass(labelElem, 'fixwidth');
+          element.appendChild(inputElem);
+          element.appendChild(labelElem);
+          addClass(element, 'cornerHeader');
+        }
+      }
     }
   }
 

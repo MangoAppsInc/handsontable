@@ -3,6 +3,7 @@ import { registerPlugin } from './../../plugins';
 import { isObject } from './../../helpers/object';
 import { rangeEach } from './../../helpers/number';
 import { isUndefined } from './../../helpers/mixed';
+import { arrayUnique } from './../../helpers/array';
 
 const DEFAULT_SEARCH_RESULT_CLASS = 'htSearchResult';
 
@@ -139,6 +140,7 @@ class Search extends BasePlugin {
     const rowCount = this.hot.countRows();
     const colCount = this.hot.countCols();
     const queryResult = [];
+    const noSearchResult = [];
     const instance = this.hot;
 
     rangeEach(0, rowCount - 1, (rowIndex) => {
@@ -155,17 +157,22 @@ class Search extends BasePlugin {
             col: colIndex,
             data: cellData,
           };
-
-          queryResult.push(singleResult);
+          queryResult.push(rowIndex);
         }
 
         if (cellCallback) {
           cellCallback(instance, rowIndex, colIndex, cellData, testResult);
         }
       });
+      if(queryResult.indexOf(rowIndex) < 0) {
+        noSearchResult.push(rowIndex);
+      }
     });
 
-    return queryResult;
+    return {
+      queryResult: arrayUnique(queryResult),
+      noSearchResult,
+    }
   }
 
   /**

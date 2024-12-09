@@ -373,7 +373,7 @@ export default function Core(rootElement, userSettings, rootInstanceSymbol = fal
 
           delta = datamap.createRow(index, amount, source);
           spliceWith(priv.cellSettings, index, amount, 'array');
-
+          instance.userCheckBoxSelectedRows = []; // custom requirement mangoapps
           if (delta) {
             if (selection.isSelected() && selection.selectedRange.current().from.row >= index) {
               selection.selectedRange.current().from.row += delta;
@@ -452,7 +452,7 @@ export default function Core(rootElement, userSettings, rootInstanceSymbol = fal
           } else {
             removeRow([[index, amount]]);
           }
-
+          instance.userCheckBoxSelectedRows = []; // custom requirement mangoapps
           grid.adjustRowsAndCols();
           instance._refreshBorders(); // it will call render and prepare methods
           break;

@@ -1,4 +1,4 @@
-import { addClass } from '../../../helpers/dom/element';
+import { addClass, removeClass } from '../../../helpers/dom/element';
 import { arrayEach } from '../../../helpers/array';
 import { toSingleLine } from '../../../helpers/templateLiteralTag';
 import BaseComponent from './_base';
@@ -150,12 +150,31 @@ class OperatorsComponent extends BaseComponent {
   }
 
   /**
+  * Enable clear column filter Menu when user perform any dirty action on Table
+  *
+  * @private
+  * @param None.
+  */
+  enableClearColumnField() {
+    try {
+      const dropdownMenu = this.hot.getPlugin('dropdownMenu');
+      if(dropdownMenu && dropdownMenu.menu.hotMenu) {
+        dropdownMenu.menu.hotMenu.getCell(0,0).classList.remove('htDisabled');
+        window.columnFilterAttempted = true;
+      }
+    } catch(err) {
+      console.trace(err);
+    }
+  }
+
+  /**
    * OnChange listener.
    *
    * @private
    * @param {Event} event DOM event
    */
   onRadioInputChange(event) {
+    this.enableClearColumnField();
     this.setState(event.realTarget.value);
   }
 }

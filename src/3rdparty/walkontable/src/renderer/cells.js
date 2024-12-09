@@ -90,6 +90,7 @@ export default class CellsRenderer extends BaseRenderer {
           TD.className = '';
         }
         TD.removeAttribute('style');
+        TD.removeAttribute('title');
 
         this.table.cellRenderer(sourceRowIndex, sourceColumnIndex, TD);
       }

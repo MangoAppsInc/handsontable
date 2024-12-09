@@ -247,6 +247,7 @@ class MultipleSelectUI extends BaseUI {
       this.itemsBox.listen();
       this.itemsBox.selectCell(0, 0);
     }
+    this.enableClearColumnField();
   }
 
   /**
@@ -271,6 +272,24 @@ class MultipleSelectUI extends BaseUI {
   }
 
   /**
+  * Enable clear column filter Menu when user perform any dirty action on Table
+  *
+  * @private
+  * @param None.
+  */
+  enableClearColumnField() {
+    try {
+      const dropdownMenu = this.hot.getPlugin('dropdownMenu');
+      if(dropdownMenu && dropdownMenu.menu.hotMenu) {
+        dropdownMenu.menu.hotMenu.getCell(0,0).classList.remove('htDisabled');
+        window.columnFilterAttempted = true;
+      }
+    } catch(err) {
+      console.trace(err);
+    }
+  }
+
+  /**
    * On click listener for "Select all" link.
    *
    * @private
@@ -282,6 +301,7 @@ class MultipleSelectUI extends BaseUI {
       row.checked = true;
     });
     this.itemsBox.render();
+    this.enableClearColumnField();
   }
 
   /**
@@ -296,6 +316,7 @@ class MultipleSelectUI extends BaseUI {
       row.checked = false;
     });
     this.itemsBox.render();
+    this.enableClearColumnField();
   }
 }
 

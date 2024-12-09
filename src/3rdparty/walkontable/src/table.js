@@ -572,6 +572,7 @@ class Table {
         }
         if (highlightRowClassName && !classesToRemove.includes(highlightRowClassName)) {
           classesToRemove.push(highlightRowClassName);
+          classesToRemove.push('highlight_row_header_green');
         }
         if (highlightColumnClassName && !classesToRemove.includes(highlightColumnClassName)) {
           classesToRemove.push(highlightColumnClassName);

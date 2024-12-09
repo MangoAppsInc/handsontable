@@ -156,3 +156,15 @@ export function isKey(keyCode, baseCode) {
 
   return result;
 }
+/**
+  MangoApps Date Format Hash
+*/
+export const maDateFormats = {
+  "MM/DD/YYYY": "MM/DD/YYYY",
+  "DD/MM/YYYY": "DD/MM/YYYY",
+  "YYYY/MM/DD": "YYYY/MM/DD",
+  "DD.MM.YYYY": "DD.MM.YYYY",
+  "Mon DD, YYYY": "MMM DD, YYYY",
+  "Day Mon DD, YYYY": "ddd MMM DD, YYYY",
+  "Day, DD.MM.YYYY": "ddd, DD.MM.YYYY",
+}

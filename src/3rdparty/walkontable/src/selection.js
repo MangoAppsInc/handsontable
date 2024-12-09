@@ -230,6 +230,9 @@ class Selection {
 
           if (this.settings.highlightHeaderClassName) {
             newClasses.push(this.settings.highlightHeaderClassName);
+            // custom fix for row header green color.
+            // if(event && event.currentTarget && event.currentTarget.parentElement && hasClass(event.currentTarget.parentElement, 'ht_clone_left'))
+            newClasses.push('highlight_row_header_green');
           }
 
           if (this.settings.highlightRowClassName) {

@@ -334,6 +334,17 @@ function onChange(event, instance) {
     }
 
     instance.setDataAtCell(row, col, newCheckboxValue);
+    try {
+      // Changes are made in dropdownMenu via changing the checkboxes values.
+      if (instance.rootElement && instance.rootElement.classList && instance.rootElement.classList.value && instance.rootElement.classList.value.indexOf('htUIMultipleSelectHot') > -1) {
+        const tBody = Handsontable.dom.closest(instance.rootElement, ['TBODY']);
+        tBody.firstChild.firstChild.classList.remove('htDisabled');
+        window.columnFilterAttempted = true;
+      }
+    } catch(err) {
+      console.trace(err);
+    }
+
   }
 }
 

@@ -186,8 +186,16 @@ class ConditionComponent extends BaseComponent {
   reset() {
     const lastSelectedColumn = this.hot.getPlugin('filters').getSelectedColumn();
     const visualIndex = lastSelectedColumn && lastSelectedColumn.visualIndex;
+    // const cellType = this.hot.getCellMeta(0, visualIndex).data_type;
+    const {data_type, user_ref_col} = this.hot.getCellMeta(0, visualIndex);
     const columnType = this.hot.getDataType(...(this.hot.getSelectedLast() || [0, visualIndex]));
     const items = getOptionsList(columnType);
+
+    if (['UL', 'TL', 'TCL', 'URL', 'RT', 'OL', 'AN'].indexOf(data_type) > -1) items.splice(5, 6);
+
+    if(['D'].include(data_type) && user_ref_col) {
+      items.splice(4);
+    }
 
     arrayEach(this.getInputElements(), element => element.hide());
     this.getSelectElement().setItems(items);

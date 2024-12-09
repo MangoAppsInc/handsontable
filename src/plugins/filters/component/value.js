@@ -93,7 +93,7 @@ class ValueComponent extends BaseComponent {
           if (item.checked) {
             selectedValues.push(item.value);
           }
-        });
+        }, {});
 
         state.args = [selectedValues];
         state.command = getConditionDescriptor(CONDITION_BY_VALUE);
@@ -172,7 +172,11 @@ class ValueComponent extends BaseComponent {
   reset() {
     const defaultBlankCellValue = this.hot.getTranslatedPhrase(C.FILTERS_VALUES_BLANK_CELLS);
     const values = unifyColumnValues(this._getColumnVisibleValues());
-    const items = intersectValues(values, values, defaultBlankCellValue);
+    const lastSelectedColumn = this.hot.getPlugin('filters').getSelectedColumn();
+    const visualIndex = lastSelectedColumn && lastSelectedColumn.visualIndex;
+    // const cellType = this.hot.getCellMeta(0, visualIndex).data_type;
+    const {data_type, is_additional_info_column} = this.hot.getCellMeta(0, visualIndex);
+    const items = intersectValues(values, values, defaultBlankCellValue, null, { data_type, is_additional_info_column} );
 
     this.getMultipleSelectElement().setItems(items);
     super.reset();
@@ -201,8 +205,10 @@ class ValueComponent extends BaseComponent {
   _getColumnVisibleValues() {
     const lastSelectedColumn = this.hot.getPlugin('filters').getSelectedColumn();
     const visualIndex = lastSelectedColumn && lastSelectedColumn.visualIndex;
+    const filteredItems = this.hot.getSourceDataAtCol(visualIndex);
 
-    return arrayMap(this.hot.getDataAtCol(visualIndex), v => toEmptyString(v));
+    return arrayMap(filteredItems, v => toEmptyString(v));
+
   }
 }
 

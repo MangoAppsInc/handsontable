@@ -140,6 +140,8 @@ class TrimRows extends BasePlugin {
    * @fires Hooks#afterTrimRow
    */
   trimRows(rows) {
+    console.info('Inside trimmed Rows Function this value', this);
+    console.info('Rows', rows);
     const currentTrimConfig = this.trimmedRows;
     const isValidConfig = this.isValidConfig(rows);
     let destinationTrimConfig = currentTrimConfig;
@@ -147,9 +149,10 @@ class TrimRows extends BasePlugin {
     if (isValidConfig) {
       destinationTrimConfig = Array.from(new Set(currentTrimConfig.concat(rows)));
     }
+    console.info("Destination trim config", destinationTrimConfig);
 
     const allowTrimRow = this.hot.runHooks('beforeTrimRow', currentTrimConfig, destinationTrimConfig, isValidConfig);
-
+    console.info("Allow to Trim", allowTrimRow);
     if (allowTrimRow === false) {
       return;
     }
