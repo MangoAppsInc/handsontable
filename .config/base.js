@@ -21,7 +21,7 @@ module.exports.create = function create(envArgs) {
       library: 'Handsontable',
       libraryExport: 'default',
       libraryTarget: 'umd',
-      path: path.resolve(__dirname, '../dist'),
+      path: path.resolve(__dirname, '../../MangoApps_RoR_Rails5/public/javascripts/hansontable'),
       umdNamedDefine: true,
     },
     resolve: {
