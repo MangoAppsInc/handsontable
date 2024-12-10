@@ -3575,7 +3575,9 @@ export default function Core(rootElement, userSettings, rootInstanceSymbol = fal
    * @returns {String}
    */
   this.getTranslatedPhrase = function(dictionaryKey, extraArguments) {
-    return getTranslatedPhrase(priv.settings.language, dictionaryKey, extraArguments);
+    let translatedString = getTranslatedPhrase(priv.settings.language, dictionaryKey, extraArguments);
+    translatedString = _i18n_bkp ? _i18n_bkp(translatedString) : translatedString;
+    return translatedString;
   };
 
   /**
