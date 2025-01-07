@@ -67,7 +67,7 @@ export class CommandExecutor {
     if (command.disabled === true) {
       return;
     }
-    if (typeof command.disabled === 'function' && command.disabled.call(this.hot) === true) {
+    if (typeof command.disabled === 'function' && !window.columnFilterAttempted && command.disabled.call(this.hot) === true) {
       return;
     }
     if (hasOwnProperty(command, 'submenu')) {
