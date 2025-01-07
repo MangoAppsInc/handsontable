@@ -1461,6 +1461,24 @@ class TableView {
       // workaround for https://github.com/handsontable/handsontable/issues/1946
       fastInnerText(element, String.fromCharCode(160));
       addClass(element, 'cornerHeader');
+
+      if(!this.settings.isMobileView) {
+        if(element.firstChild) {
+          const inputElem = document.createElement('input');
+          const labelElem = document.createElement('label');
+          inputElem.setAttribute('type','checkbox');
+          inputElem.setAttribute('id','col_header_checkbox');
+          inputElem.setAttribute('title','Select all entries (max 500 at a time)');
+          labelElem.setAttribute('style','height:22px;');
+          labelElem.setAttribute('for','col_header_checkbox');
+          addClass(inputElem, 'filled-in');
+          addClass(labelElem, 'fixwidth');
+          element.append(inputElem);
+          element.append(labelElem);
+          addClass(element, 'cornerHeader');
+          console.log(element)
+        }
+      }
     }
   }
 
