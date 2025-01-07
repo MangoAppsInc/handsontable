@@ -130,8 +130,7 @@ export function getTranslatedPhrase(languageCode, dictionaryKey, argumentsForFor
   if (Array.isArray(formattedPhrase)) {
     return formattedPhrase[0];
   }
-
-  return formattedPhrase;
+  return _i18n_bkp ? _i18n_bkp(formattedPhrase) : formattedPhrase;;
 }
 
 /**
