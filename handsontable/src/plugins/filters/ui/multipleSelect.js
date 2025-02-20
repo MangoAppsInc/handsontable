@@ -356,6 +356,7 @@ export class MultipleSelectUI extends BaseUI {
       this.#itemsBox.listen();
       this.#itemsBox.selectCell(0, 0);
     }
+    this.#enableClearColumnField();
   }
 
   /**
@@ -375,6 +376,7 @@ export class MultipleSelectUI extends BaseUI {
     });
 
     this.#itemsBox.setSourceDataAtCell(changes);
+    this.#enableClearColumnField();
   }
 
   /**
@@ -393,7 +395,27 @@ export class MultipleSelectUI extends BaseUI {
     });
 
     this.#itemsBox.setSourceDataAtCell(changes);
+    this.#enableClearColumnField();
   }
+
+  /**
+  * Enable clear column filter Menu when user perform any dirty action on Table
+  *
+  * @private
+  * @param None.
+  */
+  #enableClearColumnField() {
+    try {
+      const dropdownMenu = this.hot.getPlugin('dropdownMenu');
+      if(dropdownMenu && dropdownMenu.menu.hotMenu) {
+        dropdownMenu.menu.hotMenu.getCell(0,0).classList.remove('htDisabled');
+        window.columnFilterAttempted = true;
+      }
+    } catch(err) {
+      console.trace(err);
+    }
+  }
+
 }
 
 export default MultipleSelectUI;

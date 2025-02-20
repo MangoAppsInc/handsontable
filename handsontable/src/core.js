@@ -557,6 +557,8 @@ export default function Core(rootElement, userSettings, rootInstanceSymbol = fal
           // eslint-disable-next-line no-param-reassign
           index = index ?? (insertRowMode === 'below' ? numberOfSourceRows : 0);
 
+          instance.userCheckBoxSelectedRows = []; // custom requirement mangoapps
+
           const {
             delta: rowDelta,
             startPhysicalIndex: startRowPhysicalIndex,
@@ -578,6 +580,8 @@ export default function Core(rootElement, userSettings, rootInstanceSymbol = fal
             delta: colDelta,
             startPhysicalIndex: startColumnPhysicalIndex,
           } = datamap.createCol(index, amount, { source, mode: insertColumnMode });
+
+          instance.userCheckBoxSelectedRows = []; // custom requirement mangoapps
 
           if (colDelta) {
             if (Array.isArray(tableMeta.colHeaders)) {

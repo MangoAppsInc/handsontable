@@ -42,7 +42,7 @@ export function isItemSeparator(itemToTest) {
  * @returns {boolean}
  */
 export function isItemDisabled(itemToTest, hot) {
-  return itemToTest.disabled === true ||
+  return itemToTest.disabled === true || itemToTest.doNotClose ||
          (typeof itemToTest.disabled === 'function' && itemToTest.disabled.call(hot) === true);
 }
 

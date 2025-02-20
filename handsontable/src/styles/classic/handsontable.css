@@ -1170,6 +1170,13 @@ textarea.HandsontableCopyPaste {
   cursor: pointer;
 }
 
+.handsontable .filter-icon {
+  float:right;
+  font-size: 12px;
+  margin: 3px 1px 0 5px;
+  cursor: pointer;
+}
+
 .htDropdownMenu:not(.htGhostTable) {
   display: none;
   position: absolute;
@@ -1431,10 +1438,14 @@ textarea.HandsontableCopyPaste {
   overflow-y: scroll;
 }
 
-.handsontable .htFiltersActive .changeType {
+/* .handsontable .htFiltersActive .changeType {
   border: 1px solid #509272;
   color: #18804e;
   background-color: #d2e0d9;
+} */
+
+.handsontable .htFiltersActive .filter-icon {
+  color: #18804e !important;
 }
 
 .handsontable .htUISelectAll {

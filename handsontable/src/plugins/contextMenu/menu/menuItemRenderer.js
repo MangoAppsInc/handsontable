@@ -86,7 +86,7 @@ export function createMenuItemRenderer(mainTableHot) {
 
     if (isItemDisabled(item, mainTableHot)) {
       addClass(TD, 'htDisabled');
-
+      if (item.showTitle && item.titleValue) TD.setAttribute('title', item.titleValue);
     } else if (isItemSelectionDisabled(item)) {
       addClass(TD, 'htSelectionDisabled');
 

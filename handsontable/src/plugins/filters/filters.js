@@ -528,6 +528,7 @@ export class Filters extends BasePlugin {
     if (allowFiltering !== false) {
       if (needToFilter) {
         const trimmedRows = [];
+        const filteredRows = [];
 
         this.hot.batchExecution(() => {
           this.filtersRowsMap.clear();
@@ -539,8 +540,19 @@ export class Filters extends BasePlugin {
           rangeEach(this.hot.countSourceRows() - 1, (row) => {
             if (!visibleVisualRowsAssertion(row)) {
               trimmedRows.push(row);
+            } else {
+              filteredRows.push(row); // actual rows which are filtered.
             }
           });
+
+          console.info('Trimmed Rows', trimmedRows);
+          this.trimmedRowsArrayClone =  JSON.parse(JSON.stringify(filteredRows));
+          // Meaning if searching is performed and rows are filtered due to search.
+          console.info('Searched Clone', this.searchedRowsClone);
+          if (this.searchedRowsClone && this.searchedRowsClone.length) {
+            // add those rows in trimmedRows arry which are not common in searched rows and filtered rows.
+            filteredRows.filter(row => this.searchedRowsClone.indexOf(row) === -1).map(row => trimmedRows.push(row));
+          }
 
           arrayEach(trimmedRows, (physicalRow) => {
             this.filtersRowsMap.setValueAtIndex(physicalRow, true);
@@ -551,7 +563,20 @@ export class Filters extends BasePlugin {
           this.hot.deselectCell();
         }
       } else {
-        this.filtersRowsMap.clear();
+        if (this.searchedRowsClone && this.searchedRowsClone.length) {
+          // this.trimRowsPlugin.trimmedRows = JSON.parse(JSON.stringify(this.searchedRowsClone));
+          const rowsArray = new Array(this.hot.countSourceRows());
+          const rowsToBeTrimmed = [];
+          for(var i = 0; i < rowsArray.length; i++) {
+            // Not in the search result
+            if (this.searchedRowsClone.indexOf(i) === -1) rowsToBeTrimmed.push(i);
+          }
+          arrayEach(rowsToBeTrimmed, (physicalRow) => {
+            this.filtersRowsMap.setValueAtIndex(physicalRow, true);
+          });
+        } else {
+          this.filtersRowsMap.clear();
+        }
       }
     }
 

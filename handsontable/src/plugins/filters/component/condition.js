@@ -210,7 +210,15 @@ export class ConditionComponent extends BaseComponent {
     if (selectedColumn !== null) {
       const { visualIndex } = selectedColumn;
 
+      const {data_type, user_ref_col} = this.hot.getCellMeta(0, visualIndex);
+
       items = getOptionsList(this.hot.getDataType(0, visualIndex, this.hot.countRows(), visualIndex));
+
+      if (['UL', 'TL', 'TCL', 'URL', 'RT', 'OL', 'AN'].indexOf(data_type) > -1) items.splice(5, 6);
+
+      if(['D'].include(data_type) && user_ref_col) {
+        items.splice(4);
+      }
     }
 
     arrayEach(this.getInputElements(), element => element.hide());
