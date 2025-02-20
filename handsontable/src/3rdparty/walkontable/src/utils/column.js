@@ -50,7 +50,8 @@ export default class ColumnUtils {
     const oversizedHeight = this.dataAccessObject.wtViewport.oversizedColumnHeaders[level];
 
     if (oversizedHeight !== undefined) {
-      height = height ? Math.max(height, oversizedHeight) : oversizedHeight;
+      // height = height ? Math.max(height, oversizedHeight) : oversizedHeight;
+      height = height ? Math.min(height, oversizedHeight) : oversizedHeight;
     }
 
     return height;
