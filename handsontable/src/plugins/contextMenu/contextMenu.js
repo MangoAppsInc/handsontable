@@ -250,6 +250,8 @@ export class ContextMenu extends BasePlugin {
       return;
     }
 
+    window.columnFilterAttempted = false;
+    if (this.pluginName !== 'ContextMenu') this.hot.userCheckBoxSelectedRows = [];
     this.prepareMenuItems();
     this.menu.open();
 
