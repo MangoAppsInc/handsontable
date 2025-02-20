@@ -371,7 +371,7 @@ innerBorderBottom - Property controlled by bottom overlay
 
 .handsontable td.htInvalid {
   /* gives priority over td.area selection background */
-  background-color: #ffbeba !important;
+  /* background-color: #ffbeba !important; */
 }
 
 .handsontable td.htNoWrap {

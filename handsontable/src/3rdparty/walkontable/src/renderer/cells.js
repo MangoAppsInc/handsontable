@@ -98,6 +98,7 @@ export class CellsRenderer extends BaseRenderer {
 
         TD.removeAttribute('style');
         TD.removeAttribute('dir');
+        TD.removeAttribute('title');
 
         // Remove all accessibility-related attributes for the cell to start fresh.
         removeAttribute(TD, [
