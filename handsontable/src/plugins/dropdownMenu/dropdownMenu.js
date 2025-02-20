@@ -353,6 +353,8 @@ export class DropdownMenu extends BasePlugin {
     if (this.menu?.isOpened()) {
       return;
     }
+    
+    window.columnFilterAttempted = false;
 
     this.menu.open();
 
@@ -437,7 +439,7 @@ export class DropdownMenu extends BasePlugin {
    * @param {Event} event The mouse event object.
    */
   #onTableClick(event) {
-    if (hasClass(event.target, BUTTON_CLASS_NAME)) {
+    if (hasClass(event.target, BUTTON_CLASS_NAME) || hasClass(event.target, 'filter-icon')) {
       const offset = getDocumentOffsetByElement(this.menu.container, this.hot.rootDocument);
       const rect = event.target.getBoundingClientRect();
 
@@ -479,9 +481,10 @@ export class DropdownMenu extends BasePlugin {
     }
 
     const existingButton = TH.querySelector(`.${BUTTON_CLASS_NAME}`);
+    const existingFLElem = TH.querySelector('.filter-icon');
 
     // Plugin enabled and buttons already exists, return.
-    if (this.enabled && existingButton) {
+    if (this.enabled && (existingButton || existingFLElem)) {
       return;
     }
     // Plugin disabled and buttons still exists, so remove them.
@@ -489,14 +492,21 @@ export class DropdownMenu extends BasePlugin {
       if (existingButton) {
         existingButton.parentNode.removeChild(existingButton);
       }
+      if (existingFLElem) {
+        existingFLElem.parentNode.removeChild(existingFLElem);
+      }
 
       return;
     }
     const button = this.hot.rootDocument.createElement('button');
 
-    button.className = BUTTON_CLASS_NAME;
+    // button.className = BUTTON_CLASS_NAME;
+    const iElem = this.hot.rootDocument.createElement('I');
+    button.className = `${BUTTON_CLASS_NAME} far fa-chevron-square-down`;
+    iElem.className = 'far fa-filter filter-icon';
     button.type = 'button';
     button.tabIndex = -1;
+    iElem.tabIndex = -1;
 
     if (this.hot.getSettings().ariaTags) {
       setAttribute(button, [
@@ -514,7 +524,9 @@ export class DropdownMenu extends BasePlugin {
       return false;
     };
 
-    TH.firstChild.insertBefore(button, TH.firstChild.firstChild);
+    // TH.firstChild.insertBefore(button, TH.firstChild.firstChild);
+    if (!this.hot.getSettings().isSharedView) TH.firstChild.insertBefore(button, TH.firstChild.firstChild);
+    TH.firstChild.insertBefore(iElem, TH.firstChild.firstChild);
   }
 
   /**

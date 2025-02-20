@@ -139,7 +139,8 @@ export class ValueComponent extends BaseComponent {
             }
 
             this.#triggerModifyMultipleSelectionValueHook(item, rowMetaMap);
-          }
+          },
+          {}
         );
 
         const column = stateInfo.editedConditionStack.column;
@@ -229,9 +230,13 @@ export class ValueComponent extends BaseComponent {
     const rowValues = rowEntries.map(entry => entry.value);
     const rowMetaMap = new Map(rowEntries.map(row => [row.value, row.meta]));
     const values = unifyColumnValues(rowValues);
+    const lastSelectedColumn = this.hot.getPlugin('filters').getSelectedColumn();
+    const visualIndex = lastSelectedColumn && lastSelectedColumn.visualIndex;
+    const {data_type, is_additional_info_column} = this.hot.getCellMeta(0, visualIndex);
+
     const items = intersectValues(values, values, defaultBlankCellValue, (item) => {
       this.#triggerModifyMultipleSelectionValueHook(item, rowMetaMap);
-    });
+    }, {data_type, is_additional_info_column});
 
     this.getMultipleSelectElement().setItems(items);
     super.reset();
@@ -293,12 +298,15 @@ export class ValueComponent extends BaseComponent {
    */
   _getColumnVisibleValues() {
     const selectedColumn = this.hot.getPlugin('filters').getSelectedColumn();
-
+    
     if (selectedColumn === null) {
       return [];
     }
-
-    return arrayMap(this.hot.getDataAtCol(selectedColumn.visualIndex), (v, rowIndex) => {
+    
+    // const filteredItems = this.hot.getDataAtCol(visualIndex);
+    const filteredItems = this.hot.getSourceDataAtCol(selectedColumn.visualIndex);
+    
+    return arrayMap(filteredItems, (v, rowIndex) => {
       return {
         value: toEmptyString(v),
         meta: this.hot.getCellMeta(rowIndex, selectedColumn.visualIndex),
