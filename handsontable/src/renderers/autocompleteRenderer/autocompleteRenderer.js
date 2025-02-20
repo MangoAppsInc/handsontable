@@ -25,13 +25,15 @@ export function autocompleteRenderer(hotInstance, TD, row, col, prop, value, cel
   const ARROW = rootDocument.createElement('DIV');
   const isAriaEnabled = hotInstance.getSettings().ariaTags;
 
-  ARROW.className = 'htAutocompleteArrow';
-
-  if (isAriaEnabled) {
-    ARROW.setAttribute(...A11Y_HIDDEN());
+  if(cellProperties.data_type !== 'D') {
+    ARROW.className = 'htAutocompleteArrow';
+  
+    if (isAriaEnabled) {
+      ARROW.setAttribute(...A11Y_HIDDEN());
+    }
+  
+    ARROW.appendChild(rootDocument.createTextNode(String.fromCharCode(9660)));
   }
-
-  ARROW.appendChild(rootDocument.createTextNode(String.fromCharCode(9660)));
 
   rendererFunc.apply(this, [hotInstance, TD, row, col, prop, value, cellProperties]);
 
@@ -41,26 +43,28 @@ export function autocompleteRenderer(hotInstance, TD, row, col, prop, value, cel
     // this is faster than innerHTML. See: https://github.com/handsontable/handsontable/wiki/JavaScript-&-DOM-performance-tips
   }
 
-  TD.insertBefore(ARROW, TD.firstChild);
+  if(cellProperties.data_type !== 'D') {
+    TD.insertBefore(ARROW, TD.firstChild);
 
-  addClass(TD, 'htAutocomplete');
+    addClass(TD, 'htAutocomplete');
 
-  if (!hotInstance.acArrowListener) {
-    const eventManager = new EventManager(hotInstance);
+    if (!hotInstance.acArrowListener) {
+      const eventManager = new EventManager(hotInstance);
 
-    // not very elegant but easy and fast
-    hotInstance.acArrowListener = function(event) {
-      if (hasClass(event.target, 'htAutocompleteArrow')) {
-        hotInstance.view._wt.getSetting('onCellDblClick', null, hotInstance._createCellCoords(row, col), TD);
-      }
-    };
+      // not very elegant but easy and fast
+      hotInstance.acArrowListener = function(event) {
+        if (hasClass(event.target, 'htAutocompleteArrow')) {
+          hotInstance.view._wt.getSetting('onCellDblClick', null, hotInstance._createCellCoords(row, col), TD);
+        }
+      };
 
-    eventManager.addEventListener(hotInstance.rootElement, 'mousedown', hotInstance.acArrowListener);
+      eventManager.addEventListener(hotInstance.rootElement, 'mousedown', hotInstance.acArrowListener);
 
-    // We need to unbind the listener after the table has been destroyed
-    hotInstance.addHookOnce('afterDestroy', () => {
-      eventManager.destroy();
-    });
+      // We need to unbind the listener after the table has been destroyed
+      hotInstance.addHookOnce('afterDestroy', () => {
+        eventManager.destroy();
+      });
+    }
   }
 }
 

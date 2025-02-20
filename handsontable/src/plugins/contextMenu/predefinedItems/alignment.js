@@ -38,7 +38,9 @@ export default function alignmentItem() {
         {
           key: `${KEY}:left`,
           name() {
-            return this.getTranslatedPhrase(C.CONTEXTMENU_ITEMS_ALIGNMENT_LEFT);
+            let label = this.getTranslatedPhrase(C.CONTEXTMENU_ITEMS_ALIGNMENT_LEFT);
+            label = _i18n_bkp?_i18n_bkp(label): label;
+            return label;
           },
           callback() {
             const selectedRange = this.getSelectedRange();
@@ -56,7 +58,9 @@ export default function alignmentItem() {
         {
           key: `${KEY}:center`,
           name() {
-            return this.getTranslatedPhrase(C.CONTEXTMENU_ITEMS_ALIGNMENT_CENTER);
+            let label = this.getTranslatedPhrase(C.CONTEXTMENU_ITEMS_ALIGNMENT_CENTER);
+            label = _i18n_bkp?_i18n_bkp(label): label;
+            return label;
           },
           callback() {
             const selectedRange = this.getSelectedRange();
@@ -74,7 +78,9 @@ export default function alignmentItem() {
         {
           key: `${KEY}:right`,
           name() {
-            return this.getTranslatedPhrase(C.CONTEXTMENU_ITEMS_ALIGNMENT_RIGHT);
+            let label = this.getTranslatedPhrase(C.CONTEXTMENU_ITEMS_ALIGNMENT_RIGHT);
+            label = _i18n_bkp?_i18n_bkp(label): label;
+            return label;
           },
           callback() {
             const selectedRange = this.getSelectedRange();
@@ -89,31 +95,33 @@ export default function alignmentItem() {
           },
           disabled: false
         },
-        {
-          key: `${KEY}:justify`,
-          name() {
-            return this.getTranslatedPhrase(C.CONTEXTMENU_ITEMS_ALIGNMENT_JUSTIFY);
-          },
-          callback() {
-            const selectedRange = this.getSelectedRange();
-            const stateBefore = getAlignmentClasses(selectedRange, (row, col) => this.getCellMeta(row, col).className);
-            const type = 'horizontal';
-            const alignment = 'htJustify';
+        // {
+        //   key: `${KEY}:justify`,
+        //   name() {
+        //     return this.getTranslatedPhrase(C.CONTEXTMENU_ITEMS_ALIGNMENT_JUSTIFY);
+        //   },
+        //   callback() {
+        //     const selectedRange = this.getSelectedRange();
+        //     const stateBefore = getAlignmentClasses(selectedRange, (row, col) => this.getCellMeta(row, col).className);
+        //     const type = 'horizontal';
+        //     const alignment = 'htJustify';
 
-            this.runHooks('beforeCellAlignment', stateBefore, selectedRange, type, alignment);
-            align(selectedRange, type, alignment, (row, col) => this.getCellMeta(row, col),
-              (row, col, key, value) => this.setCellMeta(row, col, key, value));
-            this.render();
-          },
-          disabled: false
-        },
+        //     this.runHooks('beforeCellAlignment', stateBefore, selectedRange, type, alignment);
+        //     align(selectedRange, type, alignment, (row, col) => this.getCellMeta(row, col),
+        //       (row, col, key, value) => this.setCellMeta(row, col, key, value));
+        //     this.render();
+        //   },
+        //   disabled: false
+        // },
         {
           name: SEPARATOR
         },
         {
           key: `${KEY}:top`,
           name() {
-            return this.getTranslatedPhrase(C.CONTEXTMENU_ITEMS_ALIGNMENT_TOP);
+            let label = this.getTranslatedPhrase(C.CONTEXTMENU_ITEMS_ALIGNMENT_TOP);
+            label = _i18n_bkp?_i18n_bkp(label): label;
+            return label;
           },
           callback() {
             const selectedRange = this.getSelectedRange();
@@ -131,7 +139,9 @@ export default function alignmentItem() {
         {
           key: `${KEY}:middle`,
           name() {
-            return this.getTranslatedPhrase(C.CONTEXTMENU_ITEMS_ALIGNMENT_MIDDLE);
+            let label = this.getTranslatedPhrase(C.CONTEXTMENU_ITEMS_ALIGNMENT_MIDDLE);
+            label = _i18n_bkp?_i18n_bkp(label): label;
+            return label;
           },
           callback() {
             const selectedRange = this.getSelectedRange();
@@ -149,7 +159,9 @@ export default function alignmentItem() {
         {
           key: `${KEY}:bottom`,
           name() {
-            return this.getTranslatedPhrase(C.CONTEXTMENU_ITEMS_ALIGNMENT_BOTTOM);
+            let label = this.getTranslatedPhrase(C.CONTEXTMENU_ITEMS_ALIGNMENT_BOTTOM);
+            label = _i18n_bkp?_i18n_bkp(label): label;
+            return label;
           },
           callback() {
             const selectedRange = this.getSelectedRange();
