@@ -81,7 +81,7 @@ class ValueComponent extends BaseComponent {
 
       if (firstByValueCondition) {
         let rowValues = arrayMap(filteredRowsFactory(column, conditionsStack), row => row.value);
-
+        const {data_type, is_additional_info_column} = this.hot.getCellMeta(0, column);
         rowValues = unifyColumnValues(rowValues);
 
         if (conditionArgsChange) {
@@ -93,7 +93,7 @@ class ValueComponent extends BaseComponent {
           if (item.checked) {
             selectedValues.push(item.value);
           }
-        }, {});
+        }, { data_type, is_additional_info_column });
 
         state.args = [selectedValues];
         state.command = getConditionDescriptor(CONDITION_BY_VALUE);
