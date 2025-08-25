@@ -472,11 +472,11 @@ class Table {
   markOversizedColumnHeaders() {
     const { wot } = this;
     const isClone = this.isWorkingOnClone();
-    const overlayName = wot.getOverlayName();
+    // const overlayName = wot.getOverlayName();
     const columnHeaders = wot.getSetting('columnHeaders');
     const columnHeadersCount = columnHeaders.length;
 
-    if (columnHeadersCount && !wot.wtViewport.hasOversizedColumnHeadersMarked[overlayName] && !isClone) {
+    if (columnHeadersCount && !isClone) {
       const rowHeaders = wot.getSetting('rowHeaders');
       const rowHeaderCount = rowHeaders.length;
       const columnCount = this.getRenderedColumnsCount();
@@ -486,7 +486,7 @@ class Table {
           this.markIfOversizedColumnHeader(renderedColumnIndex);
         }
       }
-      wot.wtViewport.hasOversizedColumnHeadersMarked[overlayName] = true;
+      // wot.wtViewport.hasOversizedColumnHeadersMarked[overlayName] = true;
     }
   }
 
