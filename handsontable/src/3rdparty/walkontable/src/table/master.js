@@ -89,11 +89,11 @@ class MasterTable extends Table {
   markOversizedColumnHeaders() {
     const { wtSettings } = this;
     const { wtViewport } = this.dataAccessObject;
-    const overlayName = 'master';
+    // const overlayName = 'master';
     const columnHeaders = wtSettings.getSetting('columnHeaders');
     const columnHeadersCount = columnHeaders.length;
 
-    if (columnHeadersCount && !wtViewport.hasOversizedColumnHeadersMarked[overlayName]) {
+    if (columnHeadersCount) {
       const rowHeaders = wtSettings.getSetting('rowHeaders');
       const rowHeaderCount = rowHeaders.length;
       const columnCount = this.getRenderedColumnsCount();
@@ -103,7 +103,7 @@ class MasterTable extends Table {
           this.markIfOversizedColumnHeader(renderedColumnIndex);
         }
       }
-      wtViewport.hasOversizedColumnHeadersMarked[overlayName] = true;
+      // wtViewport.hasOversizedColumnHeadersMarked[overlayName] = true;
     }
   }
 }

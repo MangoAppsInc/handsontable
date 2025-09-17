@@ -651,8 +651,7 @@ export class Filters extends BasePlugin {
       this.#previousConditionStack
     );
 
-    if (allowFiltering !== false) {
-      if (needToFilter) {
+    if (allowFiltering !== false && needToFilter) {
         const trimmedRows = [];
         const filteredRows = [];
 
@@ -688,29 +687,27 @@ export class Filters extends BasePlugin {
         if (!navigableHeaders && !visibleVisualRows.length) {
           this.hot.deselectCell();
         }
-      } else {
-        if (this.searchedRowsClone && this.searchedRowsClone.length) {
-          // this.trimRowsPlugin.trimmedRows = JSON.parse(JSON.stringify(this.searchedRowsClone));
-          const rowsArray = new Array(this.hot.countSourceRows());
-          const rowsToBeTrimmed = [];
-          for(var i = 0; i < rowsArray.length; i++) {
-            // Not in the search result
-            if (this.searchedRowsClone.indexOf(i) === -1) rowsToBeTrimmed.push(i);
-          }
-          arrayEach(rowsToBeTrimmed, (physicalRow) => {
+        this.#previousConditionStack = this.exportConditions();
+    } else if (allowFiltering !== false && !needToFilter) {
+      if (this.searchedRowsClone && this.searchedRowsClone.length) {
+        // this.trimRowsPlugin.trimmedRows = JSON.parse(JSON.stringify(this.searchedRowsClone));
+        const rowsArray = new Array(this.hot.countSourceRows());
+        const rowsToBeTrimmed = [];
+        for (var i = 0; i < rowsArray.length; i++) {
+          // Not in the search result
+          if (this.searchedRowsClone.indexOf(i) === -1) rowsToBeTrimmed.push(i);
+        }
+        this.#previousConditionStack = this.exportConditions();
+        this.hot.batchExecution(() => {
+          this.filtersRowsMap.clear();
+          arrayEach(rowsToBeTrimmed, physicalRow => {
             this.filtersRowsMap.setValueAtIndex(physicalRow, true);
           });
-        } else {
-          this.filtersRowsMap.clear();
-        }
+        }, true);
+      } else {
+        this.#previousConditionStack = this.exportConditions();
+        this.filtersRowsMap.clear();
       }
-
-      this.#previousConditionStack = this.exportConditions();
-
-    } else if (allowFiltering !== false && !needToFilter) {
-      this.#previousConditionStack = this.exportConditions();
-      this.filtersRowsMap.clear();
-
     } else {
       this.importConditions(this.#previousConditionStack);
     }
