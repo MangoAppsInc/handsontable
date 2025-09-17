@@ -226,15 +226,16 @@ export class MultipleSelectUI extends BaseUI {
         beforeOnCellMouseUp: () => {
           this.#itemsBox.listen();
         },
-        modifyColWidth: (width) => {
-          const minWidth = this.#itemsBox.container.scrollWidth - getScrollbarWidth(rootDocument);
+        // modifyColWidth: (width) => {
+        //   const minWidth = this.#itemsBox.container.scrollWidth - getScrollbarWidth(rootDocument);
 
-          if (width !== undefined && width < minWidth) {
-            return minWidth;
-          }
+        //   if (width !== undefined && width < minWidth) {
+        //     return minWidth;
+        //   }
 
-          return width;
-        },
+        //   return width;
+        // },
+        colWidths: () => this.#itemsBox.container.scrollWidth - getScrollbarWidth(rootDocument),
         maxCols: 1,
         autoWrapCol: true,
         height: 110,

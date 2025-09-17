@@ -348,7 +348,8 @@ export class Menu {
       },
       beforeOnCellMouseUp: (event) => {
         if (this.hasSelectedItem()) {
-          shouldAutoCloseMenu = !this.isCommandPassive(this.getSelectedItem());
+          const selectedItem = this.getSelectedItem();
+          shouldAutoCloseMenu = !selectedItem.doNotClose && !this.isCommandPassive(selectedItem);
           this.executeCommand(event);
         }
       },
@@ -575,7 +576,7 @@ export class Menu {
 
     this.runLocalHooks('select', selectedItem, event);
 
-    if (this.isCommandPassive(selectedItem)) {
+    if (!selectedItem.doNotClose && this.isCommandPassive(selectedItem)) {
       return;
     }
 

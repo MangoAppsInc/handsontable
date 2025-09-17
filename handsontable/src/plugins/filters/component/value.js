@@ -123,7 +123,7 @@ export class ValueComponent extends BaseComponent {
           filteredRows.map(row => [row.value, this.hot.getCellMeta(row.meta.visualRow, row.meta.visualCol)])
         );
         const unifiedRowValues = unifyColumnValues(rowValues);
-
+        const {data_type, is_additional_info_column} = this.hot.getCellMeta(0, physicalColumn);
         if (conditionArgsChange) {
           firstByValueCondition.args[0] = conditionArgsChange;
         }
@@ -140,7 +140,7 @@ export class ValueComponent extends BaseComponent {
 
             this.#triggerModifyMultipleSelectionValueHook(item, rowMetaMap);
           },
-          {}
+          {data_type, is_additional_info_column}
         );
 
         const column = stateInfo.editedConditionStack.column;
