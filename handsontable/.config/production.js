@@ -33,6 +33,11 @@ module.exports.create = function create(envArgs) {
       ],
     };
 
+    c.externals = {
+      ...(c.externals || {}),
+      hyperformula: 'HyperFormula'
+    };
+
     // Remove all 'MiniCssExtractPlugin' instances
     c.plugins = c.plugins.filter(function(plugin) {
       return !(plugin instanceof MiniCssExtractPlugin);
@@ -96,24 +101,24 @@ module.exports.create = function create(envArgs) {
               flatten: true,
               force: true,
             },
-            {
-              from: `${getClosest('node_modules/dompurify/')}dist/@(purify.js|purify.js.map)`,
-              to: 'dompurify',
-              flatten: true,
-              force: true,
-            },
-            {
-              from: `${getClosest('node_modules/hyperformula/')}dist/hyperformula.full.min.js`,
-              to: 'hyperformula',
-              flatten: true,
-              force: true,
-            },
-            {
-              from: `${getClosest('node_modules/hyperformula/')}dist/languages/*.js`,
-              to: 'hyperformula/languages',
-              flatten: true,
-              force: true,
-            },
+            // {
+            //   from: `${getClosest('node_modules/dompurify/')}dist/@(purify.js|purify.js.map)`,
+            //   to: 'dompurify',
+            //   flatten: true,
+            //   force: true,
+            // },
+            // {
+            //   from: `${getClosest('node_modules/hyperformula/')}dist/hyperformula.full.min.js`,
+            //   to: 'hyperformula',
+            //   flatten: true,
+            //   force: true,
+            // },
+            // {
+            //   from: `${getClosest('node_modules/hyperformula/')}dist/languages/*.js`,
+            //   to: 'hyperformula/languages',
+            //   flatten: true,
+            //   force: true,
+            // },
             {
               from: `${getClosest('node_modules/hyperformula/')}LICENSE.txt`,
               to: 'hyperformula',

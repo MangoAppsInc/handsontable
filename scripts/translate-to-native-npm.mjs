@@ -18,6 +18,8 @@ const argv = yargs(commandArr)
   .boolean('if-present')
   .array('exclude')
   .alias('exclude', 'e')
+  .array('filter')
+  .alias('filter', 'f')
   .argv;
 const modifier = process.env.COMMAND_ENV;
 
@@ -49,15 +51,15 @@ switch (modifier) {
     const [command] = argv._;
     // eslint-disable-next-line prefer-template
     let workspacesCommandList = '-w ' + [
-      'handsontable',
-      '@handsontable/angular',
-      '@handsontable/angular-wrapper',
-      '@handsontable/react',
-      '@handsontable/react-wrapper',
-      '@handsontable/vue',
-      '@handsontable/vue3',
-      'visual-tests',
-      'examples',
+      'handsontable'
+      // '@handsontable/angular',
+      // '@handsontable/angular-wrapper',
+      // '@handsontable/react',
+      // '@handsontable/react-wrapper',
+      // '@handsontable/vue',
+      // '@handsontable/vue3',
+      // 'visual-tests',
+      // 'examples',
     ].join(' -w ');
 
     if (argv.exclude) {

@@ -18,7 +18,7 @@
     "lint": "npm run eslint && npm run all lint -- --if-present",
     "eslint": "eslint .github/scripts/ bin/changelog scripts/",
     "test": "npm run all test -- -e=examples",
-    "build": "npm run all build -- -e=examples",
+    "build": "npm run all build -- --filter=handsontable",
     "freeze": "node scripts/freeze.mjs",
     "release": "node scripts/release.mjs",
     "changelog": "bin/changelog",
@@ -43,7 +43,6 @@
     "@babel/plugin-syntax-import-assertions": "^7.16.7",
     "@babel/plugin-syntax-jsx": "^7.24.7",
     "@babel/plugin-transform-runtime": "^7.11.0",
-    "core-js": "^3.37.0",
     "@babel/preset-env": "^7.11.0",
     "@babel/register": "^7.8.3",
     "@babel/runtime": "^7.11.2",
@@ -52,6 +51,7 @@
     "babel-plugin-transform-inline-environment-variables": "^0.4.3",
     "babel-plugin-transform-require-ignore": "^0.1.1",
     "chalk": "^4.1.2",
+    "core-js": "^3.37.0",
     "cross-env": "^7.0.3",
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.2.1",
@@ -82,9 +82,7 @@
   },
   "workspaces": [
     "handsontable",
-    "wrappers/*",
-    "visual-tests",
-    "examples"
+    "visual-tests"
   ],
   "packageManager": "pnpm@10.12.2"
 }
