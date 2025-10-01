@@ -838,6 +838,7 @@ export default function Core(rootContainer, userSettings, rootInstanceSymbol = f
           } else {
             removeRow([[index, amount]]);
           }
+          instance.userCheckBoxSelectedRows = []; // custom requirement mangoapps
           break;
 
         case 'remove_col':
@@ -916,6 +917,7 @@ export default function Core(rootContainer, userSettings, rootInstanceSymbol = f
           } else {
             removeCol([[index, amount]]);
           }
+          instance.userCheckBoxSelectedRows = []; // custom requirement mangoapps
           break;
         default:
           throw new Error(`There is no such action "${action}"`);
