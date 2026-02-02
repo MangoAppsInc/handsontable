@@ -80,6 +80,12 @@ export function toVisualValue(value, defaultEmptyValue, cellType, isUserRefCol) 
      } catch(e) {}
   }
 
+  if(['S', 'O', 'C', 'R'].indexOf(cellType) > -1) {
+    try {
+      visualValue = Emoji && Emoji.parser && Emoji.parser.parseColonsToUnicode(visualValue);
+    } catch(e) {}
+  }
+
   return visualValue;
 }
 
