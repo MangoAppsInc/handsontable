@@ -26,6 +26,7 @@ import { CONDITION_NAME as CONDITION_YESTERDAY } from './condition/date/yesterda
 import { CONDITION_NAME as CONDITION_BY_VALUE } from './condition/byValue';
 import { CONDITION_NAME as CONDITION_TRUE } from './condition/true';
 import { CONDITION_NAME as CONDITION_FALSE } from './condition/false';
+import { CONDITION_NAME as CONDITION_IS_DEACTIVATED } from './condition/isDeactivated';
 
 import { OPERATION_ID as OPERATION_AND } from './logicalOperations/conjunction';
 import { OPERATION_ID as OPERATION_OR } from './logicalOperations/disjunction';
@@ -55,6 +56,7 @@ export {
   CONDITION_BY_VALUE,
   CONDITION_TRUE,
   CONDITION_FALSE,
+  CONDITION_IS_DEACTIVATED,
   OPERATION_AND,
   OPERATION_OR,
   OPERATION_OR_THEN_VARIABLE
