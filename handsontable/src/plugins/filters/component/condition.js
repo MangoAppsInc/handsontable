@@ -5,7 +5,7 @@ import { isKey } from '../../../helpers/unicode';
 import { clone } from '../../../helpers/object';
 import * as C from '../../../i18n/constants';
 import { BaseComponent } from './_base';
-import getOptionsList, { CONDITION_NONE } from '../constants';
+import getOptionsList, { CONDITION_NONE, CONDITION_IS_DEACTIVATED } from '../constants';
 import { InputUI } from '../ui/input';
 import { SelectUI } from '../ui/select';
 import { getConditionDescriptor } from '../conditionRegisterer';
@@ -215,6 +215,14 @@ export class ConditionComponent extends BaseComponent {
       items = getOptionsList(this.hot.getDataType(0, visualIndex, this.hot.countRows(), visualIndex));
 
       if (['UL', 'TL', 'TCL', 'URL', 'RT', 'OL', 'AN'].indexOf(data_type) > -1) items.splice(5, 6);
+
+      // Add "Is Deactivated" filter option for UL (User Lookup) columns only
+      // Insert after "Is not empty" (index 4, after the separator)
+      if (data_type === 'UL') {
+        const isDeactivatedDescriptor = getConditionDescriptor(CONDITION_IS_DEACTIVATED);
+        // Insert after "Is not empty" which is at index 3, before the separator at index 4
+        items.splice(4, 0, isDeactivatedDescriptor);
+      }
 
       if(['D'].include(data_type) && user_ref_col) {
         items.splice(4);
