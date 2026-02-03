@@ -83,6 +83,7 @@ const dictionary = {
   [C.FILTERS_CONDITIONS_TODAY]: 'Today',
   [C.FILTERS_CONDITIONS_TOMORROW]: 'Tomorrow',
   [C.FILTERS_CONDITIONS_YESTERDAY]: 'Yesterday',
+  [C.FILTERS_CONDITIONS_IS_DEACTIVATED]: 'Is Deactivated',
 
   [C.FILTERS_VALUES_BLANK_CELLS]: 'Blank cells',
 
