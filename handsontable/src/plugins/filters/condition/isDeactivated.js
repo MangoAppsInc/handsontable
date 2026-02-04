@@ -4,7 +4,7 @@ import { registerCondition } from '../conditionRegisterer';
 export const CONDITION_NAME = 'is_deactivated';
 
 // Separator used for UL (User List) columns in MangoApps
-const UL_SEPARATOR = '___';
+const UL_SEPARATOR = /\s*,\s*(?=(?:\d+|~~|~~~)\s*:)/;
 
 /**
  * Condition: Is Deactivated
